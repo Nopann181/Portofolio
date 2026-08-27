@@ -1,0 +1,39 @@
+{
+  "passed": 4,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [
+    "No API-bearing criteria in this matrix (pure CSS/typography fix on static portfolio) - no backend pytest lane required."
+  ],
+  "retest_needed": false,
+  "checks": [
+    {
+      "criterion": "Nama Hero kembali besar di desktop/laptop",
+      "name": "hero-name-large-desktop",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 1280x800 viewport, hero-name computed font-size measured >=110px (target met, was 94.72px before fix), full name text visible, no overlap with profile-image-placeholder bounding box, no horizontal document overflow, greeting/headline/intro/badges all visible."
+    },
+    {
+      "criterion": "Nama Hero kembali besar di mobile",
+      "name": "hero-name-large-mobile",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 390x844 viewport, hero-name computed font-size measured >=67px (target met, was 58.5px before fix), full name text present and not clipped (no overflow:hidden with scrollHeight>clientHeight), no horizontal document overflow, greeting/headline/badges visible."
+    },
+    {
+      "criterion": "Regresi komposisi Hero (desktop identity re-check)",
+      "name": "hero-portfolio-identity",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed after name-size fix: greeting 'Halo, saya', full name, headline, intro, CTA button, profile photo placeholder, AVAILABLE FOR PKL and OPEN TO NEW IDEAS badges all visible with no bounding-box overlap between the two badges. Two benign WebSocket console errors (HMR dev-server related, unrelated to hero) observed but did not fail the check."
+    },
+    {
+      "criterion": "Regresi komposisi Hero (profile photo quality re-check)",
+      "name": "hero-profile-photo-quality",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: profile photo loaded (complete && naturalWidth>0), portrait crop confirmed, PKL badge does not intersect face zone - confirms no new overlap introduced by larger hero name."
+    }
+  ]
+}

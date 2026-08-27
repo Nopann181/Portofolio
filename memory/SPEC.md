@@ -15,6 +15,9 @@ Static personal portfolio for Mochamad Novanda Vianizar, presented in Bahasa Ind
 - Hero CTA jumps to the project list
 - Contact links open email or the provided external profiles
 
+## Hero typography
+The full name is the primary editorial focal point, using a prominent responsive scale on desktop and mobile while retaining natural three-line wrapping without colliding with the portrait.
+
 ## Data and auth
 All portfolio content is static in the frontend. No auth, roles, or seeded accounts are used. Backend remains the template health/status API only.
 
