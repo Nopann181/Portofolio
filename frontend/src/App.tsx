@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type TouchEvent } from "react";
-import { ArrowDownRight, ArrowUpRight, ChevronLeft, ChevronRight, Menu, Sparkles, X } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, ChevronLeft, ChevronRight, Download, Menu, Sparkles, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import "@/App.css";
 
@@ -16,6 +16,8 @@ type Project = {
 type ProjectSlide = {
   src: string;
   alt: string;
+  title: string;
+  caption: string;
 };
 
 const projects: Project[] = [
@@ -59,23 +61,32 @@ const navItems = [
 ];
 
 const profilePhoto = "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/u7h4uap7_WhatsApp%20Image%202026-08-27%20at%2014.07.50%20%281%29.jpeg";
+const cvUrl = "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/t3f91crr_CV_Mochamad_Novanda_Vianizar.docx";
 
 const sport4AllSlides = [
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/967l8um9_FADE%20IN%206%20%282%29.png",
     alt: "Tampilan splash screen aplikasi Sport4All dengan identitas visual merah dan hitam",
+    title: "Brand Introduction",
+    caption: "Pembuka yang mengenalkan identitas Sport4All secara cepat dan berkarakter.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/hrfbv2pf_iPhone%2016%20Pro%20-%2010%20%282%29.png",
     alt: "Tampilan beranda aplikasi Sport4All berisi aktivitas dan tantangan olahraga",
+    title: "Home & Momentum",
+    caption: "Beranda membantu pengguna memulai aktivitas dan menjaga progres olahraga.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/dbo918dk_iPhone%2016%20Pro%20-%2026%20%281%29.png",
     alt: "Tampilan onboarding Sport4All yang menyambut Novanda",
+    title: "Personal Welcome",
+    caption: "Onboarding personal membangun kedekatan sebelum pengguna mulai bergerak.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/0e73vd9r_iPhone%2016%20Pro%20-%2027%20%282%29.png",
     alt: "Tampilan onboarding Sport4All dengan ajakan mulai bergerak",
+    title: "Community Motivation",
+    caption: "Pesan sosial memperkuat motivasi pengguna untuk aktif bersama komunitas.",
   },
 ];
 
@@ -83,45 +94,65 @@ const pdamSlides: ProjectSlide[] = [
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/rqv0zicg_Splash%20Screen%20%28Premium%29.png",
     alt: "Splash screen aplikasi PDAM Smart Management berwarna biru",
+    title: "Splash Screen",
+    caption: "Identitas produk dan nuansa layanan air dikenalkan sejak layar pertama.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/1pa7lvze_Login%20Screen.png",
     alt: "Halaman login pelanggan aplikasi PDAM Smart Management",
+    title: "Customer Login",
+    caption: "Akses akun dibuat sederhana dengan opsi pemulihan dan biometrik.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/z02jbac4_Dashboard%20Admin.png",
     alt: "Dashboard admin PDAM berisi ringkasan tagihan dan aktivitas terbaru",
+    title: "Admin Dashboard",
+    caption: "Ringkasan pelanggan, tagihan, dan aksi utama disatukan dalam satu layar.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/j4xir3av_Customer%20Detail%20Page.png",
     alt: "Halaman detail pelanggan pada aplikasi PDAM Smart Management",
+    title: "Customer Detail",
+    caption: "Informasi akun, layanan, dan tindakan admin tersusun dalam hierarki jelas.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/g1vxr6oo_Kelola%20Tagihan.png",
     alt: "Halaman pengelolaan tagihan pelanggan aplikasi PDAM Smart Management",
+    title: "Billing Management",
+    caption: "Status tagihan dan verifikasi pembayaran dapat dipindai dengan cepat.",
   },
 ];
 
 const wireflowSlides: ProjectSlide[] = [
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/htzi9dnx_iPhone%2016%20Pro%20-%201.png",
-    alt: "Wireflow halaman detail anggota dan koleksi badge aplikasi olahraga",
+    alt: "Wireflow beranda tantangan langkah dan komunitas aktif",
+    title: "Daily Challenge",
+    caption: "Beranda memusatkan progres langkah dan aktivitas komunitas harian.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/yp41wen5_iPhone%2016%20Pro%20-%202.png",
-    alt: "Wireflow formulir pendaftaran member aplikasi olahraga",
+    alt: "Wireflow daftar program olahraga dan navigasi bawah",
+    title: "Program Discovery",
+    caption: "Daftar dan filter membantu pengguna menemukan program yang sesuai.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/i42fnaqg_iPhone%2016%20Pro%20-%203.png",
-    alt: "Wireflow detail program Lean Burn Challenge",
+    alt: "Wireflow formulir pendaftaran member aplikasi olahraga",
+    title: "Member Registration",
+    caption: "Alur pendaftaran merangkum manfaat sebelum pengguna mengisi data.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/2jsgb1xw_iPhone%2016%20Pro%20-%204.png",
-    alt: "Wireflow daftar program olahraga dan navigasi bawah",
+    alt: "Wireflow detail program Lean Burn Challenge",
+    title: "Program Detail",
+    caption: "Informasi durasi, level, dan alat mendukung keputusan sebelum bergabung.",
   },
   {
     src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/wupcp7q1_iPhone%2016%20Pro%20-%206.png",
-    alt: "Wireflow beranda tantangan langkah dan komunitas aktif",
+    alt: "Wireflow halaman detail anggota dan koleksi badge aplikasi olahraga",
+    title: "Member Profile",
+    caption: "Profil merangkum kemampuan, deskripsi diri, dan pencapaian anggota.",
   },
 ];
 
@@ -212,21 +243,27 @@ function ProjectCarousel({ projectId, projectNumber, projectName, slides }: Proj
         <ChevronRight size={20} aria-hidden="true" />
       </button>
       <div className="carousel-footer" data-testid={`${projectId}-carousel-footer`}>
-        <span className="carousel-counter" data-testid={`${projectId}-slide-counter`}>
-          {String(currentSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
-        </span>
-        <div className="carousel-dots" aria-label={`Pilih screenshot ${projectName}`} data-testid={`${projectId}-carousel-dots`}>
-          {slides.map((slide, index) => (
-            <button
-              key={slide.src}
-              type="button"
-              className={currentSlide === index ? "active" : ""}
-              onClick={() => setCurrentSlide(index)}
-              aria-label={`Tampilkan screenshot ${projectName} ${index + 1}`}
-              aria-current={currentSlide === index ? "true" : undefined}
-              data-testid={`${projectId}-dot-${index + 1}-button`}
-            />
-          ))}
+        <div className="slide-caption" data-testid={`${projectId}-slide-caption`}>
+          <strong data-testid={`${projectId}-slide-title`}>{slides[currentSlide].title}</strong>
+          <span data-testid={`${projectId}-slide-context`}>{slides[currentSlide].caption}</span>
+        </div>
+        <div className="carousel-meta">
+          <span className="carousel-counter" data-testid={`${projectId}-slide-counter`}>
+            {String(currentSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+          </span>
+          <div className="carousel-dots" aria-label={`Pilih screenshot ${projectName}`} data-testid={`${projectId}-carousel-dots`}>
+            {slides.map((slide, index) => (
+              <button
+                key={slide.src}
+                type="button"
+                className={currentSlide === index ? "active" : ""}
+                onClick={() => setCurrentSlide(index)}
+                aria-label={`Tampilkan screenshot ${projectName} ${index + 1}`}
+                aria-current={currentSlide === index ? "true" : undefined}
+                data-testid={`${projectId}-dot-${index + 1}-button`}
+              />
+            ))}
+          </div>
         </div>
       </div>
       <button className="fullscreen-expand-button" type="button" onClick={() => setFullscreenOpen(true)} aria-label={`Perbesar ${projectName}`} data-testid={`${projectId}-expand-button`}>
@@ -254,8 +291,14 @@ function ProjectCarousel({ projectId, projectNumber, projectName, slides }: Proj
               </button>
             </div>
             <div className="fullscreen-footer">
-              <span data-testid={`${projectId}-fullscreen-counter`}>{String(currentSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}</span>
-              <span data-testid={`${projectId}-fullscreen-hint`}>Geser atau gunakan tombol panah</span>
+              <div className="fullscreen-caption" data-testid={`${projectId}-fullscreen-caption`}>
+                <strong data-testid={`${projectId}-fullscreen-slide-title`}>{slides[currentSlide].title}</strong>
+                <span data-testid={`${projectId}-fullscreen-slide-context`}>{slides[currentSlide].caption}</span>
+              </div>
+              <div className="fullscreen-meta">
+                <span data-testid={`${projectId}-fullscreen-counter`}>{String(currentSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}</span>
+                <span className="fullscreen-hint" data-testid={`${projectId}-fullscreen-hint`}>Geser atau gunakan tombol panah</span>
+              </div>
             </div>
           </div>
         </div>,
@@ -371,15 +414,20 @@ function App() {
             Saya senang mengubah ide menjadi pengalaman digital yang terasa jelas, berguna, dan punya karakter. Saat ini saya sedang mencari kesempatan PKL untuk terus bertumbuh bersama tim yang positif.
           </p>
           <div className="hero-actions" data-testid="hero-actions">
-            <a className="button button-primary" href="#project" data-testid="hero-projects-button">
-              Lihat Project Saya <ArrowDownRight size={18} aria-hidden="true" />
-            </a>
+            <div className="hero-button-group" data-testid="hero-button-group">
+              <a className="button button-primary" href="#project" data-testid="hero-projects-button">
+                Lihat Project Saya <ArrowDownRight size={18} aria-hidden="true" />
+              </a>
+              <a className="button button-secondary" href={cvUrl} target="_blank" rel="noreferrer" download="CV_Mochamad_Novanda_Vianizar.docx" data-testid="hero-cv-download-link">
+                Unduh CV <Download size={17} aria-hidden="true" />
+              </a>
+            </div>
             <span className="hero-note" data-testid="hero-school-note">SMK Telkom Malang<br />Malang, Indonesia</span>
           </div>
         </div>
 
         <div className="hero-art reveal reveal-delayed" data-testid="hero-visual-area">
-          <div className="hero-art-label" data-testid="hero-art-label">Visual diary / 2024—25</div>
+          <div className="hero-art-label" data-testid="hero-art-label">Visual diary / 2024-2026</div>
           <div className="profile-frame" data-testid="profile-image-placeholder" aria-label="Area foto profil yang siap diganti">
             <div className="profile-orbit orbit-one" aria-hidden="true" />
             <div className="profile-orbit orbit-two" aria-hidden="true" />
@@ -493,15 +541,18 @@ function App() {
         <div className="contact-content">
           <p className="contact-kicker" data-testid="contact-kicker">Punya ide atau kesempatan?</p>
           <h2 data-testid="contact-heading">Mari buat sesuatu<br /><em>yang berarti.</em></h2>
-          <a className="contact-email" href="mailto:novandavianizar@gmail.com" data-testid="contact-email-link">novandavianizar@gmail.com <ArrowUpRight size={25} aria-hidden="true" /></a>
+          <div className="contact-actions" data-testid="contact-actions">
+            <a className="contact-email" href="mailto:novandavianizar@gmail.com" data-testid="contact-email-link">novandavianizar@gmail.com <ArrowUpRight size={25} aria-hidden="true" /></a>
+            <a className="contact-cv-button" href={cvUrl} target="_blank" rel="noreferrer" download="CV_Mochamad_Novanda_Vianizar.docx" data-testid="contact-cv-download-link">Unduh CV <Download size={17} aria-hidden="true" /></a>
+          </div>
         </div>
         <div className="contact-footer">
-          <div className="contact-location" data-testid="contact-location">Malang, Indonesia<br /><span>Available for PKL · 2024—25</span></div>
+          <div className="contact-location" data-testid="contact-location">Malang, Indonesia<br /><span>Available for PKL · 2024-2026</span></div>
           <div className="social-links" data-testid="social-links">
             <a href="https://www.linkedin.com/in/mochamad-novanda-vianizar-9776a5431/" target="_blank" rel="noreferrer" data-testid="linkedin-link">LinkedIn <ArrowUpRight size={15} aria-hidden="true" /></a>
             <a href="https://github.com/Nopann181" target="_blank" rel="noreferrer" data-testid="github-link">GitHub <ArrowUpRight size={15} aria-hidden="true" /></a>
           </div>
-          <span className="copyright" data-testid="copyright-text">© NV / 2025</span>
+          <span className="copyright" data-testid="copyright-text">© NV / 2026</span>
         </div>
       </section>
     </main>
