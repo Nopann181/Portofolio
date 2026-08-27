@@ -1,0 +1,146 @@
+{
+  "passed": 18,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [
+    "No API-bearing criteria in this matrix (static portfolio, no login/backend data) - no backend pytest lane required.",
+    "7 acceptance criteria in briefing covered by 18 checks total (5 new + 1 rewritten obsolete check + 12 regression re-runs); matrix size is under the 8-criterion threshold so full coverage was completed without a count note.",
+    "project-presentation check was rewritten: the previous version asserted a placeholder still existed for the Wireflow project, which contradicts this iteration's briefing (all three projects now ship real assets, zero placeholders). New version asserts zero '-visual-placeholder' testids remain and all three real carousels render."
+  ],
+  "retest_needed": false,
+  "checks": [
+    {
+      "criterion": "Carousel Wireflow dengan aset asli",
+      "name": "wireflow-carousel-real-assets",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "5 dots present, counter starts 01/05, all 5 slide images confirmed loaded (complete && naturalWidth>0) while cycling with next-button, dot-5 jumps to 05/05, next wraps circularly to 01/05. At 390px mobile viewport, touch swipe left advanced 01/05->02/05 and swipe right wrapped back to 01/05."
+    },
+    {
+      "criterion": "Pratinjau penuh tiga project",
+      "name": "fullscreen-preview-modal-three-projects",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "For sport4all, pdam, and wireflow: expand-button opens fullscreen-dialog showing correct project title/number, loaded fullscreen-image, counter, previous/next arrow buttons, and close-button which closes dialog. Also confirmed clicking the carousel image itself (fullscreen-open-button) opens the same modal for sport4all."
+    },
+    {
+      "criterion": "Kontrol keyboard fullscreen",
+      "name": "fullscreen-keyboard-controls",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "On pdam fullscreen dialog: ArrowRight 01/05->02/05, ArrowLeft 02/05->01/05, ArrowLeft wraps to 05/05, ArrowRight wraps back to 01/05 (circular), Escape closes the dialog (dialog becomes hidden)."
+    },
+    {
+      "criterion": "Fullscreen mobile dan swipe",
+      "name": "fullscreen-mobile-swipe-containment",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 390x844 viewport: wireflow fullscreen dialog boundingBox stays within [0,391] x-range (no horizontal overflow, document.scrollWidth<=clientWidth), touch swipe left on the image advanced 01/05->02/05, swipe right returned to 01/05, and close-button remained clickable and closed the dialog."
+    },
+    {
+      "criterion": "Aksen lime visual",
+      "name": "project-lime-accent-outline",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "For sport4all, pdam, wireflow carousel containers: computed borderColor contains rgb(212, 255, 63) (the --lime token), boxShadow non-empty (soft lime glow), borderWidth between 0 and 2px (thin outline) confirming subtle lime accent without obscuring images."
+    },
+    {
+      "criterion": "Ukuran visual tetap ringkas",
+      "name": "project-visual-compact-sizing",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Desktop (1280px): all three carousel boundingBox heights <=390px. Mobile (390px): all three heights <=360px. No horizontal document overflow at mobile width. No text overlap observed in screenshots."
+    },
+    {
+      "criterion": "Regresi portfolio - hero identity/photo",
+      "name": "hero-portfolio-identity",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: greeting, full name, headline, CTA, profile photo frame, AVAILABLE FOR PKL and OPEN TO NEW IDEAS badges present and non-overlapping."
+    },
+    {
+      "criterion": "Regresi portfolio - profile photo quality",
+      "name": "hero-profile-photo-quality",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: profile photo loaded (complete && naturalWidth>0), portrait crop confirmed, PKL badge does not intersect face zone."
+    },
+    {
+      "criterion": "Regresi portfolio - Sport4All carousel desktop",
+      "name": "sport4all-carousel-desktop",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: 4 dots, counter cycling via next/dot/previous, all slide images loaded."
+    },
+    {
+      "criterion": "Regresi portfolio - Sport4All carousel mobile",
+      "name": "sport4all-carousel-mobile",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: carousel fits within 390px viewport, no horizontal overflow before/after next-button."
+    },
+    {
+      "criterion": "Regresi portfolio - desktop nav",
+      "name": "pill-navigation-anchor-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: NV monogram, all four desktop nav links, anchor URLs/sections, active-state assertions intact."
+    },
+    {
+      "criterion": "Regresi portfolio - mobile nav",
+      "name": "mobile-navigation-project-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: desktop links hidden on mobile, hamburger opens menu, Project link navigates to #project, menu closes."
+    },
+    {
+      "criterion": "Regresi portfolio - about/skills",
+      "name": "about-and-skills-content",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed for RPL/UI/UX copy and Figma, Canva, CapCut, Adobe Illustrator, Lightroom skill groups."
+    },
+    {
+      "criterion": "Regresi portfolio - kontak",
+      "name": "contact-actions",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: email text/mailto link and LinkedIn/GitHub destination links intact."
+    },
+    {
+      "criterion": "Regresi portfolio - responsive stability",
+      "name": "responsive-stability",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted mobile check passed: menu usability, project navigation, no horizontal overflow before/after navigation."
+    },
+    {
+      "criterion": "Regresi portfolio - PDAM carousel desktop",
+      "name": "pdam-carousel-desktop",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: 5 dots, counter cycling via next/dot/previous, all 5 PDAM screenshots loaded."
+    },
+    {
+      "criterion": "Regresi portfolio - PDAM swipe circular",
+      "name": "pdam-swipe-circular",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: touch swipe left/right cycles circularly with no horizontal overflow."
+    },
+    {
+      "criterion": "Regresi portfolio - Sport4All swipe circular",
+      "name": "sport4all-swipe-circular",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: touch swipe left/right cycles circularly with no horizontal overflow."
+    },
+    {
+      "criterion": "Rewritten obsolete check (project-presentation)",
+      "name": "project-presentation",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rewritten to match current spec: project-list visible, all three real carousels (sport4all/pdam/wireflow) visible, zero elements matching '[data-testid$=\"-visual-placeholder\"]' confirming no placeholders remain project-wide."
+    }
+  ]
+}

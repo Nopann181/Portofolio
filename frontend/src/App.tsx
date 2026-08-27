@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type TouchEvent } from "react";
 import { ArrowDownRight, ArrowUpRight, ChevronLeft, ChevronRight, Menu, Sparkles, X } from "lucide-react";
+import { createPortal } from "react-dom";
 import "@/App.css";
 
 type Project = {
@@ -101,6 +102,29 @@ const pdamSlides: ProjectSlide[] = [
   },
 ];
 
+const wireflowSlides: ProjectSlide[] = [
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/htzi9dnx_iPhone%2016%20Pro%20-%201.png",
+    alt: "Wireflow halaman detail anggota dan koleksi badge aplikasi olahraga",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/yp41wen5_iPhone%2016%20Pro%20-%202.png",
+    alt: "Wireflow formulir pendaftaran member aplikasi olahraga",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/i42fnaqg_iPhone%2016%20Pro%20-%203.png",
+    alt: "Wireflow detail program Lean Burn Challenge",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/2jsgb1xw_iPhone%2016%20Pro%20-%204.png",
+    alt: "Wireflow daftar program olahraga dan navigasi bawah",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/wupcp7q1_iPhone%2016%20Pro%20-%206.png",
+    alt: "Wireflow beranda tantangan langkah dan komunitas aktif",
+  },
+];
+
 type ProjectCarouselProps = {
   projectId: string;
   projectNumber: string;
@@ -110,12 +134,17 @@ type ProjectCarouselProps = {
 
 function ProjectCarousel({ projectId, projectNumber, projectName, slides }: ProjectCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const touchStartX = useRef<number | null>(null);
+  const didSwipe = useRef(false);
 
   const previousSlide = () => setCurrentSlide((current) => (current - 1 + slides.length) % slides.length);
   const nextSlide = () => setCurrentSlide((current) => (current + 1) % slides.length);
+  const previousSlideIndex = (currentSlide - 1 + slides.length) % slides.length;
+  const nextSlideIndex = (currentSlide + 1) % slides.length;
 
   const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    didSwipe.current = false;
     touchStartX.current = event.touches[0]?.clientX ?? null;
   };
 
@@ -125,9 +154,34 @@ function ProjectCarousel({ projectId, projectNumber, projectName, slides }: Proj
     const distance = touchStartX.current - endX;
     touchStartX.current = null;
     if (Math.abs(distance) < 45) return;
+    didSwipe.current = true;
     if (distance > 0) nextSlide();
     else previousSlide();
   };
+
+  const openFullscreen = () => {
+    if (didSwipe.current) {
+      didSwipe.current = false;
+      return;
+    }
+    setFullscreenOpen(true);
+  };
+
+  useEffect(() => {
+    if (!fullscreenOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleKeyboard = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setFullscreenOpen(false);
+      if (event.key === "ArrowLeft") setCurrentSlide((current) => (current - 1 + slides.length) % slides.length);
+      if (event.key === "ArrowRight") setCurrentSlide((current) => (current + 1) % slides.length);
+    };
+    window.addEventListener("keydown", handleKeyboard);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyboard);
+    };
+  }, [fullscreenOpen, slides.length]);
 
   return (
     <div
@@ -138,15 +192,19 @@ function ProjectCarousel({ projectId, projectNumber, projectName, slides }: Proj
       onTouchEnd={handleTouchEnd}
     >
       <div className="project-slide-backdrop" style={{ backgroundImage: `url(${slides[currentSlide].src})` }} aria-hidden="true" />
-      <img
-        key={slides[currentSlide].src}
-        className="project-slide-image"
-        src={slides[currentSlide].src}
-        alt={slides[currentSlide].alt}
-        loading="lazy"
-        draggable="false"
-        data-testid={`${projectId}-slide-${currentSlide + 1}-image`}
-      />
+      <img className="filmstrip-peek filmstrip-peek-previous" src={slides[previousSlideIndex].src} alt="" loading="lazy" aria-hidden="true" draggable="false" />
+      <img className="filmstrip-peek filmstrip-peek-next" src={slides[nextSlideIndex].src} alt="" loading="lazy" aria-hidden="true" draggable="false" />
+      <button className="carousel-image-button" type="button" onClick={openFullscreen} aria-label={`Buka pratinjau penuh ${projectName}`} data-testid={`${projectId}-fullscreen-open-button`}>
+        <img
+          key={slides[currentSlide].src}
+          className="project-slide-image"
+          src={slides[currentSlide].src}
+          alt={slides[currentSlide].alt}
+          loading="lazy"
+          draggable="false"
+          data-testid={`${projectId}-slide-${currentSlide + 1}-image`}
+        />
+      </button>
       <button className="carousel-button carousel-previous" type="button" onClick={previousSlide} aria-label={`Screenshot ${projectName} sebelumnya`} data-testid={`${projectId}-previous-button`}>
         <ChevronLeft size={20} aria-hidden="true" />
       </button>
@@ -171,6 +229,38 @@ function ProjectCarousel({ projectId, projectNumber, projectName, slides }: Proj
           ))}
         </div>
       </div>
+      <button className="fullscreen-expand-button" type="button" onClick={() => setFullscreenOpen(true)} aria-label={`Perbesar ${projectName}`} data-testid={`${projectId}-expand-button`}>
+        <ArrowUpRight size={16} aria-hidden="true" />
+      </button>
+      {fullscreenOpen && createPortal(
+        <div className="fullscreen-preview" role="dialog" aria-modal="true" aria-label={`Pratinjau penuh ${projectName}`} onClick={() => setFullscreenOpen(false)} data-testid={`${projectId}-fullscreen-dialog`}>
+          <div className="fullscreen-panel" onClick={(event) => event.stopPropagation()} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+            <div className="fullscreen-header">
+              <div className="fullscreen-title-group">
+                <span data-testid={`${projectId}-fullscreen-project-number`}>PROJECT {projectNumber}</span>
+                <strong data-testid={`${projectId}-fullscreen-title`}>{projectName}</strong>
+              </div>
+              <button className="fullscreen-close-button" type="button" onClick={() => setFullscreenOpen(false)} aria-label="Tutup pratinjau penuh" data-testid={`${projectId}-fullscreen-close-button`}>
+                <X size={22} aria-hidden="true" />
+              </button>
+            </div>
+            <div className="fullscreen-stage">
+              <img key={`fullscreen-${slides[currentSlide].src}`} className="fullscreen-image" src={slides[currentSlide].src} alt={slides[currentSlide].alt} draggable="false" data-testid={`${projectId}-fullscreen-image`} />
+              <button className="fullscreen-arrow fullscreen-arrow-previous" type="button" onClick={previousSlide} aria-label={`Screenshot ${projectName} sebelumnya`} data-testid={`${projectId}-fullscreen-previous-button`}>
+                <ChevronLeft size={24} aria-hidden="true" />
+              </button>
+              <button className="fullscreen-arrow fullscreen-arrow-next" type="button" onClick={nextSlide} aria-label={`Screenshot ${projectName} berikutnya`} data-testid={`${projectId}-fullscreen-next-button`}>
+                <ChevronRight size={24} aria-hidden="true" />
+              </button>
+            </div>
+            <div className="fullscreen-footer">
+              <span data-testid={`${projectId}-fullscreen-counter`}>{String(currentSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}</span>
+              <span data-testid={`${projectId}-fullscreen-hint`}>Geser atau gunakan tombol panah</span>
+            </div>
+          </div>
+        </div>,
+        document.body,
+      )}
     </div>
   );
 }
@@ -262,6 +352,9 @@ function App() {
       </header>
 
       <section id="beranda" className="hero section-frame" data-testid="hero-section">
+        <span className="decor-asterisk hero-asterisk" aria-hidden="true">✱</span>
+        <span className="decor-asterisk hero-asterisk-small" aria-hidden="true">✱</span>
+        <span className="hero-lime-sweep" aria-hidden="true" />
         <div className="hero-copy reveal" data-testid="hero-copy">
           <div className="eyebrow" data-testid="hero-eyebrow">
             <span className="eyebrow-line" aria-hidden="true" />
@@ -356,6 +449,13 @@ function App() {
       </section>
 
       <section id="project" className="projects section-frame section-padding" data-testid="projects-section">
+        <div className="projects-atmosphere" aria-hidden="true">
+          <span className="project-glow project-glow-one" />
+          <span className="project-glow project-glow-two" />
+          <span className="decor-asterisk project-asterisk-one">✱</span>
+          <span className="decor-asterisk project-asterisk-two">✱</span>
+          <span className="project-orbit" />
+        </div>
         <div className="section-kicker" data-testid="projects-kicker"><span>03</span><span>Selected projects</span></div>
         <div className="projects-intro">
           <h2 className="section-title reveal" data-testid="projects-heading">Beberapa hal<br /><em>yang pernah saya buat.</em></h2>
@@ -381,14 +481,7 @@ function App() {
               ) : project.number === "02" ? (
                 <ProjectCarousel projectId="pdam" projectNumber="02" projectName="PDAM Smart Management" slides={pdamSlides} />
               ) : (
-                <div className="project-visual" data-testid={`project-${project.number}-visual-placeholder`} aria-label={`Placeholder visual ${project.title}`}>
-                  <div className="placeholder-window" aria-hidden="true">
-                    <div className="window-top"><span /><span /><span /></div>
-                    <div className="window-layout"><div className="window-sidebar" /><div className="window-content"><div /><div /><div /></div></div>
-                  </div>
-                  <span className="placeholder-caption" data-testid={`project-${project.number}-placeholder-caption`}>replaceable visual / {project.number}</span>
-                  <span className="visual-arrow" aria-hidden="true"><ArrowUpRight size={22} /></span>
-                </div>
+                <ProjectCarousel projectId="wireflow" projectNumber="03" projectName="Sports App Wireflow" slides={wireflowSlides} />
               )}
             </article>
           ))}
