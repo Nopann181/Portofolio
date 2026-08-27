@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowDownRight, ArrowUpRight, Menu, Sparkles, X } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, ChevronLeft, ChevronRight, Menu, Sparkles, X } from "lucide-react";
 import "@/App.css";
 
 type Project = {
@@ -52,9 +52,31 @@ const navItems = [
   { id: "kontak", label: "Kontak" },
 ];
 
+const profilePhoto = "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/u7h4uap7_WhatsApp%20Image%202026-08-27%20at%2014.07.50%20%281%29.jpeg";
+
+const sport4AllSlides = [
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/967l8um9_FADE%20IN%206%20%282%29.png",
+    alt: "Tampilan splash screen aplikasi Sport4All dengan identitas visual merah dan hitam",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/hrfbv2pf_iPhone%2016%20Pro%20-%2010%20%282%29.png",
+    alt: "Tampilan beranda aplikasi Sport4All berisi aktivitas dan tantangan olahraga",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/dbo918dk_iPhone%2016%20Pro%20-%2026%20%281%29.png",
+    alt: "Tampilan onboarding Sport4All yang menyambut Novanda",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/0e73vd9r_iPhone%2016%20Pro%20-%2027%20%282%29.png",
+    alt: "Tampilan onboarding Sport4All dengan ajakan mulai bergerak",
+  },
+];
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("beranda");
+  const [sportSlide, setSportSlide] = useState(0);
 
   useEffect(() => {
     const sections = navItems
@@ -81,6 +103,8 @@ function App() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const previousSportSlide = () => setSportSlide((current) => (current - 1 + sport4AllSlides.length) % sport4AllSlides.length);
+  const nextSportSlide = () => setSportSlide((current) => (current + 1) % sport4AllSlides.length);
 
   return (
     <main className="site-shell" data-testid="portfolio-page">
@@ -167,10 +191,12 @@ function App() {
           <div className="profile-frame" data-testid="profile-image-placeholder" aria-label="Area foto profil yang siap diganti">
             <div className="profile-orbit orbit-one" aria-hidden="true" />
             <div className="profile-orbit orbit-two" aria-hidden="true" />
-            <div className="profile-placeholder">
-              <span className="profile-initials" data-testid="profile-initials">NV</span>
-              <span className="profile-placeholder-label" data-testid="profile-placeholder-label">profile portrait<br />coming soon</span>
-            </div>
+            <img
+              className="profile-photo"
+              src={profilePhoto}
+              alt="Foto profil Mochamad Novanda Vianizar mengenakan hoodie abu-abu"
+              data-testid="profile-photo"
+            />
             <span className="profile-star star-one" aria-hidden="true">✳</span>
             <span className="profile-star star-two" aria-hidden="true">✳</span>
           </div>
@@ -251,14 +277,50 @@ function App() {
                   </div>
                 </div>
               </div>
-              <div className="project-visual" data-testid={`project-${project.number}-visual-placeholder`} aria-label={`Placeholder visual ${project.title}`}>
-                <div className="placeholder-window" aria-hidden="true">
-                  <div className="window-top"><span /><span /><span /></div>
-                  <div className="window-layout"><div className="window-sidebar" /><div className="window-content"><div /><div /><div /></div></div>
+              {project.number === "01" ? (
+                <div className="project-visual sport-carousel" data-testid="project-01-sport4all-carousel" aria-label="Carousel screenshot Sport4All">
+                  <div className="sport-slide-backdrop" style={{ backgroundImage: `url(${sport4AllSlides[sportSlide].src})` }} aria-hidden="true" />
+                  <img
+                    key={sport4AllSlides[sportSlide].src}
+                    className="sport-slide-image"
+                    src={sport4AllSlides[sportSlide].src}
+                    alt={sport4AllSlides[sportSlide].alt}
+                    loading="lazy"
+                    data-testid={`sport4all-slide-${sportSlide + 1}-image`}
+                  />
+                  <button className="carousel-button carousel-previous" type="button" onClick={previousSportSlide} aria-label="Screenshot Sport4All sebelumnya" data-testid="sport4all-previous-button">
+                    <ChevronLeft size={20} aria-hidden="true" />
+                  </button>
+                  <button className="carousel-button carousel-next" type="button" onClick={nextSportSlide} aria-label="Screenshot Sport4All berikutnya" data-testid="sport4all-next-button">
+                    <ChevronRight size={20} aria-hidden="true" />
+                  </button>
+                  <div className="carousel-footer" data-testid="sport4all-carousel-footer">
+                    <span className="carousel-counter" data-testid="sport4all-slide-counter">0{sportSlide + 1} / 0{sport4AllSlides.length}</span>
+                    <div className="carousel-dots" aria-label="Pilih screenshot Sport4All" data-testid="sport4all-carousel-dots">
+                      {sport4AllSlides.map((slide, index) => (
+                        <button
+                          key={slide.src}
+                          type="button"
+                          className={sportSlide === index ? "active" : ""}
+                          onClick={() => setSportSlide(index)}
+                          aria-label={`Tampilkan screenshot Sport4All ${index + 1}`}
+                          aria-current={sportSlide === index ? "true" : undefined}
+                          data-testid={`sport4all-dot-${index + 1}-button`}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <span className="placeholder-caption" data-testid={`project-${project.number}-placeholder-caption`}>replaceable visual / {project.number}</span>
-                <span className="visual-arrow" aria-hidden="true"><ArrowUpRight size={22} /></span>
-              </div>
+              ) : (
+                <div className="project-visual" data-testid={`project-${project.number}-visual-placeholder`} aria-label={`Placeholder visual ${project.title}`}>
+                  <div className="placeholder-window" aria-hidden="true">
+                    <div className="window-top"><span /><span /><span /></div>
+                    <div className="window-layout"><div className="window-sidebar" /><div className="window-content"><div /><div /><div /></div></div>
+                  </div>
+                  <span className="placeholder-caption" data-testid={`project-${project.number}-placeholder-caption`}>replaceable visual / {project.number}</span>
+                  <span className="visual-arrow" aria-hidden="true"><ArrowUpRight size={22} /></span>
+                </div>
+              )}
             </article>
           ))}
         </div>

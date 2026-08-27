@@ -1,0 +1,81 @@
+{
+  "passed": 10,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [
+    "No API-bearing criteria in this matrix (static portfolio, no login) - no backend pytest lane required."
+  ],
+  "retest_needed": false,
+  "checks": [
+    {
+      "criterion": "Foto profil asli di Hero",
+      "name": "hero-profile-photo-quality",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "profile-photo img loaded (complete=true, naturalWidth>0), portrait crop confirmed (height>width bounding box), and AVAILABLE FOR PKL badge bounding box does not intersect the top 60% (face zone) of the photo box."
+    },
+    {
+      "criterion": "Foto profil asli di Hero (regression)",
+      "name": "hero-portfolio-identity",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: greeting, full name, headline, CTA, profile-image-placeholder frame visible, AVAILABLE FOR PKL and OPEN TO NEW IDEAS badges present and non-overlapping. Only expected ws://localhost:443/ws ingress console noise."
+    },
+    {
+      "criterion": "Carousel Sport4All desktop",
+      "name": "sport4all-carousel-desktop",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 1280px: 4 dot indicators present, counter starts 01/04, next-button advances to 02/04, dot-4 click jumps to 04/04, previous-button returns to 03/04, aria-current tracks active dot; slides 1-4 each confirmed loaded (img.complete && naturalWidth>0)."
+    },
+    {
+      "criterion": "Carousel Sport4All mobile",
+      "name": "sport4all-carousel-mobile",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 390x844: carousel bounding box fully within [0,390] on x-axis, document.scrollWidth<=clientWidth (no horizontal overflow) before and after clicking next-button (01/04 -> 02/04), dot-1 click returns to 01/04."
+    },
+    {
+      "criterion": "Placeholder project bertahap",
+      "name": "project-presentation",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "3 project cards rendered; project-01 now shows project-01-sport4all-carousel (visual-placeholder testid count=0 for 01); project-02 and project-03 still show project-0X-visual-placeholder with 'replaceable visual' caption, confirming intentional staged placeholders."
+    },
+    {
+      "criterion": "Regresi navigasi dan konten - desktop pill nav",
+      "name": "pill-navigation-anchor-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: NV monogram, all four desktop nav links, anchor URLs/sections, active-state assertions intact after new assets."
+    },
+    {
+      "criterion": "Regresi navigasi dan konten - mobile nav + project link",
+      "name": "mobile-navigation-project-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: desktop links hidden on mobile, hamburger opens menu, Project link navigates to #project, menu closes."
+    },
+    {
+      "criterion": "Regresi navigasi dan konten - about/skills",
+      "name": "about-and-skills-content",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed for RPL/UI/UX copy and Figma, Canva, CapCut, Adobe Illustrator, Lightroom skill groups."
+    },
+    {
+      "criterion": "Regresi navigasi dan konten - kontak",
+      "name": "contact-actions",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: email text/mailto link and LinkedIn/GitHub destination links intact."
+    },
+    {
+      "criterion": "Regresi navigasi dan konten - responsive stability",
+      "name": "responsive-stability",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted mobile check passed: menu usability, project navigation, no horizontal overflow before/after navigation."
+    }
+  ]
+}
