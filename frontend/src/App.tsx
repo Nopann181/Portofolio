@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type TouchEvent } from "react";
 import { ArrowDownRight, ArrowUpRight, ChevronLeft, ChevronRight, Menu, Sparkles, X } from "lucide-react";
 import "@/App.css";
 
@@ -10,6 +10,11 @@ type Project = {
   tools: string[];
   tone: string;
   label: string;
+};
+
+type ProjectSlide = {
+  src: string;
+  alt: string;
 };
 
 const projects: Project[] = [
@@ -73,10 +78,106 @@ const sport4AllSlides = [
   },
 ];
 
+const pdamSlides: ProjectSlide[] = [
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/rqv0zicg_Splash%20Screen%20%28Premium%29.png",
+    alt: "Splash screen aplikasi PDAM Smart Management berwarna biru",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/1pa7lvze_Login%20Screen.png",
+    alt: "Halaman login pelanggan aplikasi PDAM Smart Management",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/z02jbac4_Dashboard%20Admin.png",
+    alt: "Dashboard admin PDAM berisi ringkasan tagihan dan aktivitas terbaru",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/j4xir3av_Customer%20Detail%20Page.png",
+    alt: "Halaman detail pelanggan pada aplikasi PDAM Smart Management",
+  },
+  {
+    src: "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/g1vxr6oo_Kelola%20Tagihan.png",
+    alt: "Halaman pengelolaan tagihan pelanggan aplikasi PDAM Smart Management",
+  },
+];
+
+type ProjectCarouselProps = {
+  projectId: string;
+  projectNumber: string;
+  projectName: string;
+  slides: ProjectSlide[];
+};
+
+function ProjectCarousel({ projectId, projectNumber, projectName, slides }: ProjectCarouselProps) {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+
+  const previousSlide = () => setCurrentSlide((current) => (current - 1 + slides.length) % slides.length);
+  const nextSlide = () => setCurrentSlide((current) => (current + 1) % slides.length);
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current === null) return;
+    const endX = event.changedTouches[0]?.clientX ?? touchStartX.current;
+    const distance = touchStartX.current - endX;
+    touchStartX.current = null;
+    if (Math.abs(distance) < 45) return;
+    if (distance > 0) nextSlide();
+    else previousSlide();
+  };
+
+  return (
+    <div
+      className={`project-visual project-carousel project-carousel-${projectId}`}
+      data-testid={`project-${projectNumber}-${projectId}-carousel`}
+      aria-label={`Carousel screenshot ${projectName}`}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div className="project-slide-backdrop" style={{ backgroundImage: `url(${slides[currentSlide].src})` }} aria-hidden="true" />
+      <img
+        key={slides[currentSlide].src}
+        className="project-slide-image"
+        src={slides[currentSlide].src}
+        alt={slides[currentSlide].alt}
+        loading="lazy"
+        draggable="false"
+        data-testid={`${projectId}-slide-${currentSlide + 1}-image`}
+      />
+      <button className="carousel-button carousel-previous" type="button" onClick={previousSlide} aria-label={`Screenshot ${projectName} sebelumnya`} data-testid={`${projectId}-previous-button`}>
+        <ChevronLeft size={20} aria-hidden="true" />
+      </button>
+      <button className="carousel-button carousel-next" type="button" onClick={nextSlide} aria-label={`Screenshot ${projectName} berikutnya`} data-testid={`${projectId}-next-button`}>
+        <ChevronRight size={20} aria-hidden="true" />
+      </button>
+      <div className="carousel-footer" data-testid={`${projectId}-carousel-footer`}>
+        <span className="carousel-counter" data-testid={`${projectId}-slide-counter`}>
+          {String(currentSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+        </span>
+        <div className="carousel-dots" aria-label={`Pilih screenshot ${projectName}`} data-testid={`${projectId}-carousel-dots`}>
+          {slides.map((slide, index) => (
+            <button
+              key={slide.src}
+              type="button"
+              className={currentSlide === index ? "active" : ""}
+              onClick={() => setCurrentSlide(index)}
+              aria-label={`Tampilkan screenshot ${projectName} ${index + 1}`}
+              aria-current={currentSlide === index ? "true" : undefined}
+              data-testid={`${projectId}-dot-${index + 1}-button`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("beranda");
-  const [sportSlide, setSportSlide] = useState(0);
 
   useEffect(() => {
     const sections = navItems
@@ -103,8 +204,6 @@ function App() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
-  const previousSportSlide = () => setSportSlide((current) => (current - 1 + sport4AllSlides.length) % sport4AllSlides.length);
-  const nextSportSlide = () => setSportSlide((current) => (current + 1) % sport4AllSlides.length);
 
   return (
     <main className="site-shell" data-testid="portfolio-page">
@@ -278,39 +377,9 @@ function App() {
                 </div>
               </div>
               {project.number === "01" ? (
-                <div className="project-visual sport-carousel" data-testid="project-01-sport4all-carousel" aria-label="Carousel screenshot Sport4All">
-                  <div className="sport-slide-backdrop" style={{ backgroundImage: `url(${sport4AllSlides[sportSlide].src})` }} aria-hidden="true" />
-                  <img
-                    key={sport4AllSlides[sportSlide].src}
-                    className="sport-slide-image"
-                    src={sport4AllSlides[sportSlide].src}
-                    alt={sport4AllSlides[sportSlide].alt}
-                    loading="lazy"
-                    data-testid={`sport4all-slide-${sportSlide + 1}-image`}
-                  />
-                  <button className="carousel-button carousel-previous" type="button" onClick={previousSportSlide} aria-label="Screenshot Sport4All sebelumnya" data-testid="sport4all-previous-button">
-                    <ChevronLeft size={20} aria-hidden="true" />
-                  </button>
-                  <button className="carousel-button carousel-next" type="button" onClick={nextSportSlide} aria-label="Screenshot Sport4All berikutnya" data-testid="sport4all-next-button">
-                    <ChevronRight size={20} aria-hidden="true" />
-                  </button>
-                  <div className="carousel-footer" data-testid="sport4all-carousel-footer">
-                    <span className="carousel-counter" data-testid="sport4all-slide-counter">0{sportSlide + 1} / 0{sport4AllSlides.length}</span>
-                    <div className="carousel-dots" aria-label="Pilih screenshot Sport4All" data-testid="sport4all-carousel-dots">
-                      {sport4AllSlides.map((slide, index) => (
-                        <button
-                          key={slide.src}
-                          type="button"
-                          className={sportSlide === index ? "active" : ""}
-                          onClick={() => setSportSlide(index)}
-                          aria-label={`Tampilkan screenshot Sport4All ${index + 1}`}
-                          aria-current={sportSlide === index ? "true" : undefined}
-                          data-testid={`sport4all-dot-${index + 1}-button`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <ProjectCarousel projectId="sport4all" projectNumber="01" projectName="Sport4All" slides={sport4AllSlides} />
+              ) : project.number === "02" ? (
+                <ProjectCarousel projectId="pdam" projectNumber="02" projectName="PDAM Smart Management" slides={pdamSlides} />
               ) : (
                 <div className="project-visual" data-testid={`project-${project.number}-visual-placeholder`} aria-label={`Placeholder visual ${project.title}`}>
                   <div className="placeholder-window" aria-hidden="true">

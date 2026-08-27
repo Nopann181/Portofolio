@@ -1,0 +1,110 @@
+{
+  "passed": 14,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [
+    "No API-bearing criteria in this matrix (static portfolio, no login/backend data) - no backend pytest lane required.",
+    "6 acceptance criteria in briefing covered by 14 checks total (4 new + 10 regression re-runs); matrix size is under the 8-criterion threshold so full coverage was completed without a count note."
+  ],
+  "retest_needed": false,
+  "checks": [
+    {
+      "criterion": "Carousel PDAM dengan aset asli",
+      "name": "pdam-carousel-desktop",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 1280px: 5 dot indicators present, counter starts 01/05; next-button advances to 02/05 (Login loaded); dot-5 jumps to 05/05 (Kelola Tagihan loaded); previous-button returns to 04/05 (Customer Detail loaded); dot-3 selects 03/05 (Dashboard Admin loaded) with aria-current tracking active dot. All 5 PDAM screenshots (Splash, Login, Dashboard Admin, Customer Detail, Kelola Tagihan) confirmed loaded via img.complete && naturalWidth>0."
+    },
+    {
+      "criterion": "Swipe melingkar Sport4All",
+      "name": "sport4all-swipe-circular",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 390x844: dispatched TouchEvents on project-01-sport4all-carousel. Swipe left (300->100) advanced 01/04 -> 02/04. After resetting to slide 1, swipe right (100->300) wrapped to 04/04 (circular). No horizontal overflow (scrollWidth<=clientWidth) after either swipe."
+    },
+    {
+      "criterion": "Swipe melingkar PDAM",
+      "name": "pdam-swipe-circular",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 390x844: dispatched TouchEvents on project-02-pdam-carousel. Swipe left (300->100) advanced 01/05 -> 02/05. After resetting to slide 1, swipe right (100->300) wrapped to 05/05 (circular). No horizontal overflow after either swipe."
+    },
+    {
+      "criterion": "Ukuran visual project lebih ringkas",
+      "name": "project-visual-compact-sizing",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Desktop (1280px) bounding-box heights: Sport4All 345px, PDAM 345px, Sports App Wireflow placeholder 250px - all <=390px cap. Mobile (390px) heights: Sport4All 345px, PDAM 345px, placeholder 185px - all <=360px cap. All three visuals stayed visible/readable with no overlap."
+    },
+    {
+      "criterion": "Placeholder bertahap",
+      "name": "project-presentation",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "3 project cards rendered. project-01-sport4all-carousel and project-02-pdam-carousel are both visible with zero matching visual-placeholder nodes for 01/02. project-03-visual-placeholder is visible with caption containing 'replaceable visual', confirming Sports App Wireflow intentionally still placeholder while Sport4All and PDAM ship real assets."
+    },
+    {
+      "criterion": "Regresi portfolio - hero identity/photo",
+      "name": "hero-portfolio-identity",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: greeting, full name, headline, CTA, profile photo frame, AVAILABLE FOR PKL and OPEN TO NEW IDEAS badges present and non-overlapping."
+    },
+    {
+      "criterion": "Regresi portfolio - profile photo quality",
+      "name": "hero-profile-photo-quality",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: profile photo loaded (complete && naturalWidth>0), portrait crop confirmed, PKL badge does not intersect face zone."
+    },
+    {
+      "criterion": "Regresi portfolio - Sport4All carousel desktop",
+      "name": "sport4all-carousel-desktop",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: 4 dots, counter cycling 01->02->04->03 via next/dot/previous, all slide images loaded."
+    },
+    {
+      "criterion": "Regresi portfolio - Sport4All carousel mobile",
+      "name": "sport4all-carousel-mobile",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: carousel fits within 390px viewport, no horizontal overflow before/after next-button, dot-1 returns to 01/04."
+    },
+    {
+      "criterion": "Regresi portfolio - desktop nav",
+      "name": "pill-navigation-anchor-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: NV monogram, all four desktop nav links, anchor URLs/sections, active-state assertions intact."
+    },
+    {
+      "criterion": "Regresi portfolio - mobile nav",
+      "name": "mobile-navigation-project-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: desktop links hidden on mobile, hamburger opens menu, Project link navigates to #project, menu closes."
+    },
+    {
+      "criterion": "Regresi portfolio - about/skills",
+      "name": "about-and-skills-content",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed for RPL/UI/UX copy and Figma, Canva, CapCut, Adobe Illustrator, Lightroom skill groups."
+    },
+    {
+      "criterion": "Regresi portfolio - kontak",
+      "name": "contact-actions",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted check passed: email text/mailto link and LinkedIn/GitHub destination links intact."
+    },
+    {
+      "criterion": "Regresi portfolio - responsive stability",
+      "name": "responsive-stability",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Rerun persisted mobile check passed: menu usability, project navigation, no horizontal overflow before/after navigation."
+    }
+  ]
+}
