@@ -1,0 +1,58 @@
+{
+  "passed": 7,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [],
+  "retest_needed": false,
+  "checks": [
+    {
+      "criterion": "Hero portfolio identity and PKL status",
+      "name": "hero-portfolio-identity",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Persisted browser check passed: greeting, full name, headline, CTA, profile placeholder, AVAILABLE FOR PKL, OPEN TO NEW IDEAS, and non-overlap assertion. Only expected ingress WebSocket connection-refused console noise reported."
+    },
+    {
+      "criterion": "Pill navigation and anchor flow",
+      "name": "pill-navigation-anchor-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Persisted browser check passed on rerun: NV monogram, all four desktop links, matching anchor URLs/sections, and active-state assertions."
+    },
+    {
+      "criterion": "Mobile navigation",
+      "name": "mobile-navigation-project-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Persisted mobile browser check passed: desktop links hidden, hamburger opens usable links, Project navigates to #project, and menu closes."
+    },
+    {
+      "criterion": "About and skills content",
+      "name": "about-and-skills-content",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Persisted browser check passed for RPL/UI/UX copy and Figma, Canva, CapCut, Adobe Illustrator, and Lightroom skill groups."
+    },
+    {
+      "criterion": "Project presentation",
+      "name": "project-presentation",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Persisted browser check passed with exactly three expected project cards, roles, descriptions, Figma tags, and replaceable visual placeholders."
+    },
+    {
+      "criterion": "Contact actions",
+      "name": "contact-actions",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Persisted browser check passed for email text/mailto and supplied LinkedIn and GitHub destinations."
+    },
+    {
+      "criterion": "Responsive stability",
+      "name": "responsive-stability",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Persisted mobile browser check passed for menu usability, project navigation, and no horizontal overflow before or after navigation."
+    }
+  ]
+}

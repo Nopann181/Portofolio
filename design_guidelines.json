@@ -1,0 +1,107 @@
+{
+  "theme": "light",
+  "typography": {
+    "primary_font": "Poppins",
+    "headings": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-[#111111]",
+      "h2": "text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#111111]",
+      "h3": "text-2xl sm:text-3xl font-semibold tracking-tight text-[#111111]",
+      "h4": "text-xl font-medium text-[#111111]"
+    },
+    "body": "text-base md:text-lg text-[#333333] leading-relaxed",
+    "labels": "text-xs md:text-sm uppercase tracking-[0.15em] font-bold text-[#555555]"
+  },
+  "colors": {
+    "background": "#F9F9F6",
+    "foreground": "#111111",
+    "accent_lime": "#D4FF3F",
+    "accent_dark": "#1A1A1A",
+    "neutral_subtle": "#EAEAE6",
+    "card_bg": "#FFFFFF"
+  },
+  "visual_enhancers": {
+    "borders": "border border-black/10",
+    "radii": {
+      "pill": "rounded-full",
+      "card": "rounded-[2rem]",
+      "badge": "rounded-full"
+    },
+    "shadows": {
+      "subtle": "shadow-[0_8px_32px_rgba(0,0,0,0.04)]",
+      "hover": "shadow-[0_16px_48px_rgba(0,0,0,0.08)]"
+    },
+    "textures": "noise overlay opacity-20 pointer-events-none mix-blend-overlay"
+  },
+  "components": {
+    "pill_nav": "fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-6 px-4 py-3 rounded-full backdrop-blur-xl bg-white/70 border border-black/5 shadow-sm",
+    "nav_items": "text-sm font-medium px-4 py-2 rounded-full hover:bg-black/5 transition-colors",
+    "primary_button": "bg-[#D4FF3F] text-[#111111] px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:scale-105 transition-transform duration-300",
+    "secondary_button": "bg-white text-[#111111] border border-black/10 px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-black/5 transition-colors duration-300",
+    "badge": "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-black/10 text-xs font-bold uppercase tracking-widest shadow-sm",
+    "project_placeholder": "w-full aspect-[4/3] bg-[#EAEAE6] rounded-[1.5rem] flex items-center justify-center border border-black/5 overflow-hidden group"
+  },
+  "layouts": {
+    "spacing": "py-24 md:py-32",
+    "container": "max-w-7xl mx-auto px-6 md:px-12",
+    "hero_section": "grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[90vh] pt-32",
+    "hero_content": "col-span-1 lg:col-span-7 flex flex-col items-start gap-8",
+    "hero_image": "col-span-1 lg:col-span-5 relative w-full aspect-[3/4] md:aspect-square bg-white rounded-[2rem] border border-black/10 shadow-sm",
+    "bento_grid": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+  },
+  "motion": {
+    "entrance": "Use Framer Motion. initial={{ opacity: 0, y: 30 }}, animate={{ opacity: 1, y: 0 }}, transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}",
+    "stagger": "staggerChildren: 0.1",
+    "scroll": "Smooth minimal scroll animations with fade/reveal and no layout disruption",
+    "hover_image": "group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1]"
+  },
+  "accessibility": {
+    "contrast": "Lime background (#D4FF3F) requires dark text (#111111) for accessibility.",
+    "focus_states": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111111] focus-visible:ring-offset-4 focus-visible:ring-offset-[#F9F9F6]",
+    "reduced_motion": "respect prefers-reduced-motion media query."
+  },
+  "media": {
+    "images": [
+      {
+        "category": "hero_profile",
+        "description": "User will upload real profile photo later. Use a solid off-white block with rounded-[2rem] corners as a replaceable placeholder.",
+        "url": ""
+      },
+      {
+        "category": "project_placeholder",
+        "description": "Clean, intentional replaceable placeholders. Solid colors (e.g. #EAEAE6) or subtle gradients with no fake images.",
+        "url": ""
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Recreate the exact intended design as requested: 'Creative, Professional, Playful, Gen Z, Editorial, Modern, Interactive, Personal, and UI/UX designer oriented'.",
+    "Use ONLY JavaScript (.js / .jsx), DO NOT use TypeScript (.tsx).",
+    "Navigation MUST be a rounded/pill-style sticky header containing an 'NV' monogram and links: Beranda, Tentang, Project, Kontak. Include a responsive mobile menu.",
+    "The Hero section must feature: 'Halo, saya', 'Mochamad Novanda Vianizar', 'Siswa Rekayasa Perangkat Lunak & UI/UX Enthusiast', a CTA 'Lihat Project Saya', a profile image placeholder area, a badge 'AVAILABLE FOR PKL', and 'OPEN TO NEW IDEAS \u2197'.",
+    "Ensure 'AVAILABLE FOR PKL' badge does NOT overlap or obscure the user's face (the placeholder image). Use stable positioning.",
+    "Implement smooth scroll anchored navigation.",
+    "Use stable responsive layouts. Desktop and mobile must not have overlapping elements, horizontal scrolling/overflow, or fragile positioning.",
+    "About Section (Tentang): Focus on authentic student description with an editorial layout.",
+    "Skills Section: Include Figma, Canva, CapCut (confident) and Adobe Illustrator, Lightroom (currently learning).",
+    "Projects Section: Create cards for 'Sport4All', 'PDAM Smart Management', and 'Sports App Wireflow'. Use clean intentional replaceable placeholders instead of fake images.",
+    "Contact Section (Kontak): Include functional email (novandavianizar@gmail.com), LinkedIn, and GitHub links.",
+    "Do NOT include blog, testimonials, pricing, services, fake awards, or fake client logos.",
+    "Ensure Header/Nav is NOT fully transparent. Use backdrop-blur and a semi-transparent background.",
+    "All interactive and key informational elements MUST include a data-testid attribute."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER use AI assistant Emoji characters like robot, brain, lightbulb, etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "All interactive and key informational elements MUST include a data-testid attribute."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "passed": 0,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [
+    {
+      "type": "test_error",
+      "severity": "high",
+      "message": "All browser checks could not launch because the run_browser_script Playwright runtime is missing /pw-browsers/chromium_headless_shell-1237/chrome-headless-shell-linux64/chrome-headless-shell. The app server itself rendered successfully under /root/bin/chromium headless CLI, but named browser assertions could not execute."
+    }
+  ],
+  "retest_needed": true,
+  "checks": [
+    {
+      "criterion": "Hero portfolio identity and PKL status",
+      "name": "hero-portfolio-identity",
+      "lane": "browser",
+      "status": "test_error",
+      "evidence": "Playwright launch error: executable missing at /pw-browsers/chromium_headless_shell-1237/chrome-headless-shell-linux64/chrome-headless-shell. Separate Chromium CLI smoke output rendered portfolio-page, Mochamad Novanda Vianizar, AVAILABLE FOR PKL, and OPEN TO NEW IDEAS."
+    },
+    {
+      "criterion": "Pill navigation and anchor flow",
+      "name": "pill-navigation-anchor-flow",
+      "lane": "browser",
+      "status": "test_error",
+      "evidence": "Playwright launch error before navigation assertions; no app assertion executed."
+    },
+    {
+      "criterion": "Mobile navigation",
+      "name": "mobile-navigation-project-flow",
+      "lane": "browser",
+      "status": "test_error",
+      "evidence": "Playwright launch error before mobile viewport assertions; no app assertion executed."
+    },
+    {
+      "criterion": "About and skills content",
+      "name": "about-and-skills-content",
+      "lane": "browser",
+      "status": "test_error",
+      "evidence": "Playwright launch error before content assertions; no app assertion executed."
+    },
+    {
+      "criterion": "Project presentation",
+      "name": "project-presentation",
+      "lane": "browser",
+      "status": "test_error",
+      "evidence": "Playwright launch error before project assertions; no app assertion executed."
+    },
+    {
+      "criterion": "Contact actions",
+      "name": "contact-actions",
+      "lane": "browser",
+      "status": "test_error",
+      "evidence": "Playwright launch error before contact assertions; no app assertion executed."
+    },
+    {
+      "criterion": "Responsive stability",
+      "name": "responsive-stability",
+      "lane": "browser",
+      "status": "test_error",
+      "evidence": "Playwright launch error before responsive assertions; no app assertion executed."
+    }
+  ]
+}

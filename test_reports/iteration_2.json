@@ -1,0 +1,66 @@
+{
+  "passed": 6,
+  "failed": 1,
+  "bugs": [
+    {
+      "severity": "medium",
+      "criterion": "Pill navigation and anchor flow",
+      "name": "pill-navigation-anchor-flow",
+      "summary": "Desktop Project navigation link does not receive the active class after clicking and scrolling to #project.",
+      "evidence": "Browser assertion failed twice (initial run and one allowed rerun): nav-project-link href=#project remained class \"nav-link \" instead of matching /active/. Failure screenshot: /root/.emergent/automation_output/20260827_092738_322/pill-navigation-anchor-flow-failure.png. Backend cross-check http://localhost:8001/api/ returned HTTP 200 {\"message\":\"Hello World\"}, so this is a frontend active-state issue, not an API failure."
+    }
+  ],
+  "action_items": [],
+  "retest_needed": true,
+  "checks": [
+    {
+      "criterion": "Hero portfolio identity and PKL status",
+      "name": "hero-portfolio-identity",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Named browser check passed: greeting, full name, headline, CTA, profile placeholder, AVAILABLE FOR PKL, OPEN TO NEW IDEAS, and non-overlap assertion. Console only reported expected ingress WebSocket connection-refused noise."
+    },
+    {
+      "criterion": "Pill navigation and anchor flow",
+      "name": "pill-navigation-anchor-flow",
+      "lane": "browser",
+      "status": "failed",
+      "evidence": "Navigation URL and section visibility progressed to #project, but nav-project-link never gained the active class; assertion failed on initial run and one rerun. Backend /api/ returned HTTP 200."
+    },
+    {
+      "criterion": "Mobile navigation",
+      "name": "mobile-navigation-project-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At persisted mobile viewport, desktop navigation was hidden; hamburger opened usable mobile links; selecting Project navigated to #project and closed the menu."
+    },
+    {
+      "criterion": "About and skills content",
+      "name": "about-and-skills-content",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Named browser check passed for RPL/UI/UX copy and Figma, Canva, CapCut, Adobe Illustrator, and Lightroom skill groups."
+    },
+    {
+      "criterion": "Project presentation",
+      "name": "project-presentation",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Named browser check passed with exactly 3 project cards and expected titles, roles, descriptions, Figma tags, and replaceable visual placeholders."
+    },
+    {
+      "criterion": "Contact actions",
+      "name": "contact-actions",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Named browser check passed for email text/mailto plus supplied LinkedIn and GitHub destinations."
+    },
+    {
+      "criterion": "Responsive stability",
+      "name": "responsive-stability",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Named browser check passed for mobile menu usability, project navigation, and no horizontal overflow before or after project navigation."
+    }
+  ]
+}
