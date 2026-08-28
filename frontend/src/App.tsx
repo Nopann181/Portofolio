@@ -443,7 +443,7 @@ function App() {
           <div className="profile-status-stack" data-testid="profile-status-stack">
             <div className="status-badge" data-testid="available-for-pkl-badge">
               <span className="status-pulse" aria-hidden="true" />
-              AVAILABLE FOR PKL
+              AVAILABLE FOR INTERN
             </div>
             <p className="open-ideas" data-testid="open-to-new-ideas">
               OPEN TO<br /><strong>NEW IDEAS</strong> <ArrowUpRight size={25} strokeWidth={2.2} aria-hidden="true" />
@@ -547,12 +547,12 @@ function App() {
           </div>
         </div>
         <div className="contact-footer">
-          <div className="contact-location" data-testid="contact-location">Malang, Indonesia<br /><span>Available for PKL · 2024-2026</span></div>
+          <div className="contact-location" data-testid="contact-location">Malang, Indonesia<br /><span>Available for PKL 2026</span></div>
           <div className="social-links" data-testid="social-links">
-            <a href="https://www.linkedin.com/in/mochamad-novanda-vianizar-9776a5431/" target="_blank" rel="noreferrer" data-testid="linkedin-link">LinkedIn <ArrowUpRight size={15} aria-hidden="true" /></a>
-            <a href="https://github.com/Nopann181" target="_blank" rel="noreferrer" data-testid="github-link">GitHub <ArrowUpRight size={15} aria-hidden="true" /></a>
+            <a href="https://www.linkedin.com/in/mochamad-novanda-vianizar-9776a5431/" target="_blank" rel="noreferrer" data-testid="linkedin-link">LinkedIn <ArrowUpRight size={25} aria-hidden="true" /></a>
+            <a href="https://github.com/Nopann181" target="_blank" rel="noreferrer" data-testid="github-link">GitHub <ArrowUpRight size={25} aria-hidden="true" /></a>
           </div>
-          <span className="copyright" data-testid="copyright-text">© NV / 2026</span>
+          <span className="copyright" data-testid="copyright-text">© Novanda Vianizar / 2026</span>
         </div>
       </section>
     </main>
