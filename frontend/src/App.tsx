@@ -60,7 +60,7 @@ const navItems = [
   { id: "kontak", label: "Kontak" },
 ];
 
-const profilePhoto = "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/u7h4uap7_WhatsApp%20Image%202026-08-27%20at%2014.07.50%20%281%29.jpeg";
+const profilePhoto = "https://i.ibb.co.com/Wm7YSR9/Chat-GPT-Image-Aug-28-2026-11-30-25-PM.png";
 const cvUrl = "https://customer-assets-jai6qajn.emergentagent.net/job_nv-design-studio/artifacts/t3f91crr_CV_Mochamad_Novanda_Vianizar.docx";
 
 const sport4AllSlides = [
